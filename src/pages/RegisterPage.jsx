@@ -27,10 +27,11 @@ const RegisterPage = ({ onRegister, onNavigate }) => {
     setLoading(true);
     try {
       const result = await onRegister(form);
-      if (result === true) {
+      if (result?.success) {
         setSuccess('Registration successful! Redirecting... | تم التسجيل بنجاح! جاري التحويل...');
+        setTimeout(() => onNavigate('login'), 1500);
       } else {
-        setError('Student number already exists | الرقم الجامعي مسجل مسبقاً');
+        setError(result?.message || 'Registration failed. Please try again. | فشل التسجيل. حاول مرة أخرى.');
       }
     } catch (err) {
       setError('Registration failed. Please try again. | فشل التسجيل. حاول مرة أخرى.');
